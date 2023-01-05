@@ -43,6 +43,13 @@ func initViper() {
 
 }
 func initGoDotEnv() {
+	if _, err := os.Stat(".env"); err != nil {
+		log.Println("[*] initiate .env file")
+		_, err := os.Create(".env")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
