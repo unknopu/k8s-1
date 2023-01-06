@@ -2,13 +2,15 @@
 
 if (! docker stats --no-stream >/dev/null 2>&1); then
     echo "[!] docker desktop does not open yet"
+    echo "[-] try execute with root"
     exit 1
 fi
 
 MY_NETWORK="mynet"
 MY_MONGO="mongodb"
 MY_REDIS="redis"
-MY_API="testapi"
+MY_API="unknopu/testapi"
+APP_NAME="testapi"
 
 if docker network ls | grep -q $MY_NETWORK; then
     echo "[!] found network: $MY_NETWORK"
@@ -31,13 +33,14 @@ else
     docker run --name $MY_REDIS -p 6379:6379 --network $MY_NETWORK -v redisdata:/data -d redis
 fi
 
-sleep 1
-if [ "$(docker ps -aq -f name=$MY_API)" ]; then
+if [ "$(docker ps -aq -f name=$APP_NAME)" ]; then
     echo "[!] found API"
 else
     echo "[*] initiate $MY_API..."
-    docker build -t $MY_API .
-    docker run --name $MY_API -p 4000:4000 --network $MY_NETWORK -d $MY_API
+    docker run --name $APP_NAME -p 4000:4000 --network $MY_NETWORK -d $MY_API
 fi
 
-
+sleep 1
+echo "[+] validate API"
+curl --location --request GET 'localhost:4000/'
+curl --location --request GET 'localhost:4000/v1/api/guest/healthcheck'
