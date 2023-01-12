@@ -44,3 +44,6 @@ sleep 1
 echo "[+] validate API"
 curl --location --request GET 'localhost:4000/'
 curl --location --request GET 'localhost:4000/v1/api/guest/healthcheck'
+
+
+# docker run --name redis -p 6379:6379 --network mynet -v redisdata:/data -d redis redis-server --requirepass "WVRKME1tTkhlREZqZHowOQ"

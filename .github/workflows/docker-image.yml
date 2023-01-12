@@ -2,8 +2,8 @@
 name: 01 Basic Dcoker Build
 
 env:
-  GKE_CLUSTER: iconica  
-  GKE_ZONE: asia-southeast1-a	 
+  # GKE_CLUSTER: iconica  
+  # GKE_ZONE: asia-southeast1-a	 
   DEPLOYMENT_NAME: ${{ github.event.repository.name }} 
 
 on:
