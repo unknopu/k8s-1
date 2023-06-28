@@ -18,7 +18,7 @@ pipeline {
             // it will be run test if it is a dev or master.
             when {
                 expression {
-                    BRANCH == 'dev' || BRANCH == 'main' || params.executeTests == true
+                    BRANCH == 'dev' || BRANCH == 'main' || params.executeTests
                 }
             }
             steps {
