@@ -24,6 +24,12 @@ pipeline {
                 always { 
                     cleanWs()
                 }
+                success {
+                    echo 'SUCCESS ...!!!'
+                }
+                failure {
+                    echo 'ITS FAILED, NOOB !!!'
+                }
             }
         }
     }
