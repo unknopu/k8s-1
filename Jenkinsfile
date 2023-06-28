@@ -4,10 +4,11 @@ pipeline {
     }
 
     stages {
-        environment {
-            IMAGE_NAME = 'jenkins' + env.BRANCH_NAME
-        }
+        
         stage('Prepare job definition') {
+            environment {
+                IMAGE_NAME = 'jenkins' + env.BRANCH_NAME
+            }
             steps {
                 script {
                     echo 'Pulling...' + env.BRANCH_NAME
