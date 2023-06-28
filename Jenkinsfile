@@ -1,3 +1,4 @@
+CODE_CHANGE = getGitChanges()
 pipeline {
     agent { 
         node {label 'slave-2'} 
@@ -8,6 +9,17 @@ pipeline {
     }
 
     stages {
+        stage('Test') {
+            // it will be run test if it is a dev or master.
+            when {
+                expresion {
+                    BRANCH == 'dev' || BRANCH == 'main' && CODE_CHANGE == true
+                }
+            }
+            steps {
+                echo 'testing the application ...'
+            }
+        }
         stage('Prepare job definition') {
             steps {
                 script {
