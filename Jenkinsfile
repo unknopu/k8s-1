@@ -12,7 +12,7 @@ pipeline {
         stage('Test') {
             // it will be run test if it is a dev or master.
             when {
-                expresion {
+                expression {
                     BRANCH == 'dev' || BRANCH == 'main' && CODE_CHANGE == true
                 }
             }
