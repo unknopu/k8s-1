@@ -1,4 +1,3 @@
-CODE_CHANGE = getGitChanges()
 pipeline {
     agent { 
         node {label 'slave-2'} 
@@ -13,7 +12,7 @@ pipeline {
             // it will be run test if it is a dev or master.
             when {
                 expression {
-                    BRANCH == 'dev' || BRANCH == 'main' && CODE_CHANGE == true
+                    BRANCH == 'dev' || BRANCH == 'main'
                 }
             }
             steps {
