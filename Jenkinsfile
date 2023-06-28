@@ -14,8 +14,8 @@ pipeline {
                     echo 'Pulling...' + env.BRANCH_NAME
                     withDockerRegistry(credentialsId: 'd2330c30-d21b-4670-84ed-37dd988b506a') {
                         sh '''
-                            docker build --no-cache -t unknopu/${BRANCH} .
-                            docker push unknopu/${BRANCH}
+                            docker build --no-cache -t unknopu/test${BRANCH} .
+                            docker push unknopu/test${BRANCH}
                         '''
                     }
                 }
