@@ -7,7 +7,7 @@ pipeline {
         
         stage('Prepare job definition') {
             environment {
-                def IMAGE_NAME = 'jenkins' + env.BRANCH_NAME
+                def IMAGE_NAME = 'jenkins'
             }
             steps {
                 script {
