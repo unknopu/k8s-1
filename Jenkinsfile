@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         BRANCH = "${env.BRANCH_NAME}"
-        IMAGE_NAME = 'app' + BRANCH
+        IMAGE_NAME = "app-${BRANCH}"
     }
 
     stages {
