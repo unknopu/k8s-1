@@ -28,8 +28,8 @@ pipeline {
         stage('Prepare job definition') {
             steps {
                 script {
-                    echo 'Pulling...' + env.BRANCH_NAME
-                    echo 'Build version: ' + ${VERSION}
+                    echo "Pulling... ${env.BRANCH_NAME}"
+                    echo "Build version: ${params.VERSION}"
                     withDockerRegistry(credentialsId: 'd2330c30-d21b-4670-84ed-37dd988b506a') {
                         sh '''
                             docker build --no-cache -t unknopu/${IMAGE_NAME} .
