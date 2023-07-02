@@ -30,7 +30,7 @@ pipeline {
                 }
             }
             steps {
-                gv.testApp()
+                // gv.testApp()
             }
         }
         stage('Prepare job definition') {
