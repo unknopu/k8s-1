@@ -31,6 +31,7 @@ pipeline {
             }
             steps {
                 // gv.testApp()
+                echo "test"
             }
         }
         stage('Prepare job definition') {
