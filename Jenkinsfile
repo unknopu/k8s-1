@@ -1,3 +1,4 @@
+def gv 
 pipeline {
     agent { 
         node {label 'slave-2'} 
@@ -5,7 +6,7 @@ pipeline {
     parameters {
         // string(name: 'VERSION', defaultValue: '', description: 'version to deploy')
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+        booleanParam(name: 'EXECUTE_TESTS', defaultValue: true, description: '')
     }
 
     environment {
@@ -14,22 +15,30 @@ pipeline {
     }
 
     stages {
+        stage('Init') {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage('Test') {
             // it will be run test if it is a dev or master.
             when {
                 expression {
-                    BRANCH == 'dev' || BRANCH == 'main' || params.executeTests
+                    BRANCH == 'dev' || BRANCH == 'main' || params.EXECUTE_TESTS
                 }
             }
             steps {
-                echo 'testing the application ...'
+                gv.testApp()
             }
         }
         stage('Prepare job definition') {
             steps {
                 script {
                     echo "Pulling... ${env.BRANCH_NAME}"
-                    echo "Build version: ${params.VERSION}"
+                    gv.buildApp()
+
                     withDockerRegistry(credentialsId: 'd2330c30-d21b-4670-84ed-37dd988b506a') {
                         sh '''
                             docker build --no-cache -t unknopu/${IMAGE_NAME} .
