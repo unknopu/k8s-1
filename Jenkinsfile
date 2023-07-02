@@ -22,18 +22,18 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            // it will be run test if it is a dev or master.
-            when {
-                expression {
-                    BRANCH == 'dev' || BRANCH == 'main' || params.EXECUTE_TESTS
-                }
-            }
-            steps {
-                // gv.testApp()
-                echo "test"
-            }
-        }
+        // stage('Test') {
+        //     // it will be run test if it is a dev or master.
+        //     when {
+        //         expression {
+        //             BRANCH == 'dev' || BRANCH == 'main' || params.EXECUTE_TESTS
+        //         }
+        //     }
+        //     steps {
+        //         // gv.testApp()
+        //         echo "test test test"
+        //     }
+        // }
         stage('Prepare job definition') {
             steps {
                 script {
