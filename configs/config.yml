@@ -1,9 +1,12 @@
 CONFIG:
+  SERVICENAME: testapi
   ISSUER: testlord
   RELEASE: false
   SERVERPORT: :1323
   DEBUGPORT: :1324
   APIKEY: 
+  LOGPATH: "."
+  # LOGFORMAT: remote_ip:${remote_ip} time:${time_rfc3339_nano}, method=${method}, uri=${uri}, status=${status}\n
 
   DATABASE:
     HOST: "35.247.183.84"

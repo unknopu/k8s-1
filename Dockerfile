@@ -1,6 +1,6 @@
 
 
-FROM golang:1.17
+FROM golang:1.22.2-bullseye
 
 ENV TZ=Asia/Bangkok
 

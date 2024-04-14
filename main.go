@@ -5,6 +5,8 @@ import (
 	"testapi/core/app"
 	"testapi/core/config"
 	conn "testapi/core/connection"
+
+	"testapi/core/logger"
 	r "testapi/router"
 )
 
@@ -13,6 +15,12 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
+
+	logFile, err := logger.LoggerFile(cf.Config.SERVICENAME, cf.Config.LOGPATH)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer logFile.Close()
 
 	//
 	// r.NewInsecure(cf).Start(cf.Config.DEBUGPORT)
@@ -26,10 +34,11 @@ func main() {
 		Debug:        true,
 	})
 	if err != nil {
-		log.Println("Postgres was failed, %v", err.Error())
+		log.Println("status:Internal Server Error,error:code=500, message=failed to connect")
 	}
 
 	option := r.Option{
+		LogFile: logFile,
 		AppContext: &app.Context{
 			Db:     database,
 			Config: cf.Config,

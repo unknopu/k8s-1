@@ -3,20 +3,26 @@ package route
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"testapi/core/app"
 	r "testapi/response"
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type Option struct {
-	Msg        string
+	LogFile    *os.File
 	AppContext *app.Context
 }
 
 func NewWithOptions(option Option) *echo.Echo {
 	router := echo.New()
+	router.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: middleware.DefaultLoggerConfig.Format,
+		Output: option.LogFile,
+	}))
 
 	router.GET("/", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, r.Success("Hello, Docker! <3\n"))
