@@ -1,0 +1,13 @@
+CONFIG:
+  ISSUER: testlord
+  RELEASE: false
+  SERVERPORT: :1323
+  DEBUGPORT: :1324
+  APIKEY: 
+
+  DATABASE:
+    HOST: "35.247.183.84"
+    PORT: 5432
+    NAME: testapi
+    USERNAME: testapi
+    PASSWORD: kfP5A9eB&vQsuVUt

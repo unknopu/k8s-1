@@ -2,41 +2,41 @@ package main
 
 import (
 	"log"
-	"net/http"
-	"os"
-	conn "testapi/connection"
-
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"testapi/core/app"
+	"testapi/core/config"
+	conn "testapi/core/connection"
+	r "testapi/router"
 )
 
 func main() {
+	cf, err := config.InitConfig("./configs")
+	if err != nil {
+		panic(err.Error())
+	}
 
-	e := echo.New()
+	//
+	// r.NewInsecure(cf).Start(cf.Config.DEBUGPORT)
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
-	_, err := conn.New(&conn.Config{
-		Host:         "xxxxxxx",
-		Port:         10023,
-		User:         "postgres",
-		Password:     "P@ssw0rd",
-		DatabaseName: "test",
+	database, err := conn.New(&conn.Config{
+		Host:         cf.Config.Database.Host,
+		Port:         cf.Config.Database.Port,
+		User:         cf.Config.Database.Username,
+		Password:     cf.Config.Database.Password,
+		DatabaseName: cf.Config.Database.Name,
 		Debug:        true,
 	})
 	if err != nil {
 		log.Println("Postgres was failed, %v", err.Error())
 	}
 
-	e.GET("/", func(c echo.Context) error {
-		return c.HTML(http.StatusOK, "Hello, Docker! <3\n")
-	})
-
-	httpPort := os.Getenv("HTTP_PORT")
-	if httpPort == "" {
-		httpPort = "1323"
+	option := r.Option{
+		AppContext: &app.Context{
+			Db:     database,
+			Config: cf.Config,
+		},
 	}
 
-	e.Logger.Fatal(e.Start(":" + httpPort))
+	if err := r.NewWithOptions(option).Start(cf.Config.ServerPort); err != nil {
+		panic(err.Error())
+	}
 }
